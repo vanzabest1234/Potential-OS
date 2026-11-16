@@ -112,16 +112,63 @@ button {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(130% 100% at 50% 42%, transparent 32%, rgba(0, 0, 0, 0.42) 100%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23grain)' opacity='0.06'/%3E%3C/svg%3E"),
+    radial-gradient(130% 100% at 50% 42%, transparent 34%, rgba(0, 0, 0, 0.46) 100%);
+  background-size: 160px 160px, cover;
+  background-repeat: repeat, no-repeat;
   pointer-events: none;
 }
 
 .wallpaper-bloom {
   background-color: #04102e;
-  background-image: radial-gradient(42% 46% at 50% 54%, rgba(255, 255, 255, 0.5) 0%, rgba(120, 205, 255, 0.45) 25%, rgba(58, 110, 255, 0) 62%),
-    radial-gradient(58% 52% at 44% 48%, rgba(96, 92, 255, 0.85), rgba(96, 92, 255, 0) 70%),
-    radial-gradient(60% 60% at 62% 62%, rgba(255, 110, 200, 0.55), rgba(255, 110, 200, 0) 68%),
-    radial-gradient(120% 110% at 50% 30%, #173a8f 0%, #0a1d54 48%, #04102e 78%, #020a1e 100%);
+  background-image: radial-gradient(70% 70% at 50% 52%, rgba(96, 156, 255, 0.32), rgba(96, 156, 255, 0) 62%),
+    radial-gradient(120% 110% at 50% 28%, #15386f 0%, #0a2158 45%, #04102e 78%, #020a1e 100%);
+}
+
+/* Soft glowing petals under the vignette, inspired by the Windows 11 bloom. */
+.wallpaper-bloom::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  background-image: radial-gradient(18% 14% at 50% 47%, rgba(255, 255, 255, 0.5), rgba(190, 225, 255, 0) 70%),
+    radial-gradient(28% 28% at 50% 50%, rgba(178, 224, 255, 0.46), rgba(178, 224, 255, 0) 64%),
+    radial-gradient(17% 30% at 50% 50%, rgba(158, 210, 255, 0.5), rgba(158, 210, 255, 0) 72%),
+    conic-gradient(
+      from 18deg at 50% 50%,
+      rgba(120, 180, 255, 0) 0deg,
+      rgba(120, 180, 255, 0.46) 16deg,
+      rgba(120, 180, 255, 0) 46deg,
+      rgba(166, 130, 255, 0.5) 76deg,
+      rgba(166, 130, 255, 0) 106deg,
+      rgba(92, 220, 255, 0.4) 136deg,
+      rgba(92, 220, 255, 0) 166deg,
+      rgba(132, 120, 255, 0.46) 196deg,
+      rgba(132, 120, 255, 0) 226deg,
+      rgba(104, 198, 255, 0.44) 256deg,
+      rgba(104, 198, 255, 0) 286deg,
+      rgba(186, 124, 255, 0.46) 316deg,
+      rgba(186, 124, 255, 0) 346deg,
+      rgba(120, 180, 255, 0.46) 360deg
+    ),
+    radial-gradient(34% 42% at 50% 50%, rgba(8, 20, 66, 0) 42%, rgba(4, 10, 34, 0.9) 100%);
+  filter: blur(20px) saturate(125%);
+  animation: bloom-breathe 26s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes bloom-breathe {
+  from {
+    transform: scale(1) rotate(-1.5deg);
+  }
+  to {
+    transform: scale(1.06) rotate(1.5deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wallpaper-bloom::before {
+    animation: none;
+  }
 }
 
 .wallpaper-dusk {
@@ -193,7 +240,12 @@ button {
 .desktop-icon-glyph {
   display: grid;
   place-items: center;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+  line-height: 0;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.38));
+}
+
+.desktop-icon-glyph svg {
+  display: block;
 }
 
 .desktop-icon-label {
@@ -229,11 +281,12 @@ button {
   height: var(--taskbar-h);
   display: flex;
   align-items: center;
-  padding: 0 8px 0 6px;
+  padding: 0 6px;
   background: var(--taskbar);
   -webkit-backdrop-filter: blur(30px) saturate(170%);
   backdrop-filter: blur(30px) saturate(170%);
   border-top: 1px solid var(--border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
   color: var(--text);
   z-index: 950;
 }
@@ -250,15 +303,16 @@ button {
 .start-button,
 .tb-btn {
   height: 40px;
-  min-width: 40px;
+  min-width: 42px;
   padding: 0;
   border: 0;
-  border-radius: 6px;
+  border-radius: 4px;
   background: transparent;
   display: grid;
   place-items: center;
   cursor: pointer;
   position: relative;
+  transition: background 0.12s ease;
 }
 
 .start-button:hover,
@@ -280,23 +334,24 @@ button {
 
 .win-logo i {
   display: block;
-  background: var(--accent);
-  border-radius: 1px;
+  background: linear-gradient(150deg, #5cc0ff, #0a78da);
+  border-radius: 2px;
 }
 
 .tb-search {
-  height: 32px;
+  height: 30px;
   display: flex;
   align-items: center;
   gap: 8px;
   margin: 0 4px;
-  padding: 0 14px 0 10px;
+  padding: 0 13px 0 9px;
   border: 1px solid var(--border-strong);
-  border-radius: 999px;
+  border-radius: 6px;
   background: var(--card);
   color: var(--text-dim);
   font-size: 12px;
   cursor: pointer;
+  transition: background 0.12s ease;
 }
 
 .tb-search:hover {
@@ -305,7 +360,7 @@ button {
 
 .tb-indicator {
   position: absolute;
-  bottom: 2px;
+  bottom: 3px;
   left: 50%;
   transform: translateX(-50%);
   width: 6px;
@@ -351,12 +406,12 @@ button {
   align-items: flex-end;
   justify-content: center;
   gap: 1px;
-  padding: 2px 8px;
+  padding: 3px 9px;
   border: 0;
   border-radius: 4px;
   background: transparent;
   color: var(--text);
-  font-size: 11px;
+  font-size: 11.5px;
   line-height: 1.2;
   cursor: pointer;
   font-variant-numeric: tabular-nums;
@@ -385,8 +440,8 @@ button {
   -webkit-backdrop-filter: blur(40px) saturate(180%);
   backdrop-filter: blur(40px) saturate(180%);
   border: 1px solid var(--border-strong);
-  border-radius: 10px;
-  box-shadow: var(--shadow);
+  border-radius: 12px;
+  box-shadow: var(--shadow), 0 0 0 1px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   z-index: 900;
   animation: start-in 0.16s ease-out;
@@ -411,12 +466,18 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
-  height: 34px;
+  height: 36px;
   padding: 0 12px;
   border: 1px solid var(--border-strong);
-  border-radius: 999px;
+  border-radius: 6px;
   background: var(--card);
+  box-shadow: inset 0 -2px 0 -1px var(--accent);
   color: var(--text-dim);
+  transition: background 0.12s ease;
+}
+
+.start-search .field:focus-within {
+  background: var(--card-hover);
 }
 
 .start-search input {
@@ -472,17 +533,23 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 12px 4px 10px;
+  gap: 9px;
+  padding: 11px 4px 10px;
   border: 0;
-  border-radius: 6px;
+  border-radius: 4px;
   background: transparent;
   color: var(--text);
   cursor: pointer;
+  transition: background 0.12s ease;
 }
 
 .app-tile:hover {
   background: var(--hover);
+}
+
+.app-tile svg {
+  display: block;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.28));
 }
 
 .app-tile span {
@@ -650,7 +717,7 @@ button {
   -webkit-backdrop-filter: blur(40px) saturate(180%);
   backdrop-filter: blur(40px) saturate(180%);
   border: 1px solid var(--border-strong);
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: var(--shadow);
   z-index: 900;
   animation: panel-in 0.16s ease-out;
@@ -679,12 +746,13 @@ button {
   gap: 8px;
   padding: 11px 12px;
   border: 1px solid transparent;
-  border-radius: 6px;
+  border-radius: 4px;
   background: var(--card);
   color: var(--text);
   font-size: 11.5px;
   text-align: left;
   cursor: pointer;
+  transition: background 0.12s ease;
 }
 
 .qs-tile:hover {
@@ -814,13 +882,17 @@ button {
   color: var(--text);
   border: 1px solid var(--border-strong);
   border-radius: 8px;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 26px 64px rgba(0, 0, 0, 0.48);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.32), 0 3px 10px rgba(0, 0, 0, 0.28), 0 28px 64px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   animation: win-in 0.15s ease-out;
 }
 
 .window.inactive {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.26), 0 8px 26px rgba(0, 0, 0, 0.28);
+}
+
+.window.inactive .title {
+  color: var(--text-dim);
 }
 
 .window.max {
@@ -853,6 +925,7 @@ button {
   flex: 0 0 auto;
   padding-left: 12px;
   background: var(--win-chrome);
+  box-shadow: inset 0 -1px 0 var(--border);
   cursor: default;
 }
 
@@ -878,6 +951,7 @@ button {
   display: grid;
   place-items: center;
   cursor: pointer;
+  transition: background 0.1s ease, color 0.1s ease;
 }
 
 .caption:hover {

@@ -73,7 +73,7 @@ export default function Window({ win, wm, settings, setSetting, toggleSetting, o
       aria-label={win.title}
     >
       <header className="titlebar" onPointerDown={startDrag} onDoubleClick={() => wm.toggleMaximize(win.id)}>
-        <app.icon size={15} style={{ color: app.color }} aria-hidden="true" />
+        <app.icon size={16} />
         <span className="title">{win.title}</span>
         <div className="captions">
           <button

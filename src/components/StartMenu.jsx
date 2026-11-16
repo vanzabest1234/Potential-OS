@@ -63,7 +63,7 @@ export default function StartMenu({ onOpenApp, wm, onClose }) {
                 onClick={() => onOpenApp(app.id)}
                 aria-label={`Open ${app.name}`}
               >
-                <app.icon size={20} strokeWidth={1.6} style={{ color: app.color }} />
+                <app.icon size={21} />
                 <span>{app.name}</span>
               </button>
             ))}
@@ -78,7 +78,7 @@ export default function StartMenu({ onOpenApp, wm, onClose }) {
                 onClick={() => onOpenApp(app.id)}
                 aria-label={`Open ${app.name}`}
               >
-                <app.icon size={30} strokeWidth={1.5} style={{ color: app.color }} />
+                <app.icon size={32} />
                 <span>{app.name}</span>
               </button>
             ))}

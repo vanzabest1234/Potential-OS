@@ -30,8 +30,8 @@ export default function Desktop({ settings, onOpenApp, onContextMenu, onClearMen
               }}
               aria-label={`Open ${app.name}`}
             >
-              <span className="desktop-icon-glyph" style={{ color: app.color }}>
-                <Icon size={34} strokeWidth={1.5} />
+              <span className="desktop-icon-glyph">
+                <Icon size={36} />
               </span>
               <span className="desktop-icon-label">{app.name}</span>
             </button>

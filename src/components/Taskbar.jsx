@@ -60,7 +60,7 @@ export default function Taskbar({
               title={app.name}
               aria-label={`Open ${app.name}`}
             >
-              <app.icon size={22} strokeWidth={1.6} style={{ color: app.color }} />
+              <app.icon size={23} />
               {win && <span className="tb-indicator" aria-hidden="true" />}
             </button>
           );
