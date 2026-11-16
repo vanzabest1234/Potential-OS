@@ -9,6 +9,19 @@ export default function Desktop({ settings, onOpenApp, onContextMenu, onClearMen
     <div className="desktop" onContextMenu={onContextMenu} onPointerDown={onClearMenu}>
       <div className={`wallpaper wallpaper-${settings.wallpaper}`} aria-hidden="true" />
 
+      {settings.wallpaper === 'bloom' && (
+        <div className="bloom" aria-hidden="true">
+          <span className="bloom-petal" />
+          <span className="bloom-petal" />
+          <span className="bloom-petal" />
+          <span className="bloom-petal" />
+          <span className="bloom-petal" />
+          <span className="bloom-petal" />
+          <span className="bloom-petal" />
+          <span className="bloom-core" />
+        </div>
+      )}
+
       <div className="desktop-icons">
         {icons.map((app) => {
           const Icon = app.icon;

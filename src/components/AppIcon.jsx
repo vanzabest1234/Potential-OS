@@ -146,26 +146,33 @@ export function SettingsIcon({ size = 32, className }) {
   return (
     <svg {...svgProps(size, className)}>
       <defs>
-        <linearGradient id={`${id}-gear`} x1="0" y1="0" x2="0.4" y2="1">
-          <stop offset="0" stopColor="#d7e2f0" />
-          <stop offset="1" stopColor="#93a7c0" />
+        <linearGradient id={`${id}-gear`} x1="0" y1="0" x2="0.35" y2="1">
+          <stop offset="0" stopColor="#eef4fc" />
+          <stop offset="0.55" stopColor="#c2d1e2" />
+          <stop offset="1" stopColor="#8ba0ba" />
         </linearGradient>
+        <mask id={`${id}-hole`}>
+          <rect x="0" y="0" width="32" height="32" fill="#fff" />
+          <circle cx="16" cy="16" r="4.7" fill="#000" />
+        </mask>
       </defs>
-      <g fill={`url(#${id}-gear)`}>
+      <g mask={`url(#${id}-hole)`} fill={`url(#${id}-gear)`}>
         {Array.from({ length: 8 }).map((_, index) => (
           <rect
             key={index}
-            x="14.1"
-            y="1.6"
-            width="3.8"
-            height="5.6"
-            rx="1.3"
+            x="13.9"
+            y="1.4"
+            width="4.2"
+            height="5.8"
+            rx="1.5"
             transform={`rotate(${index * 45} 16 16)`}
           />
         ))}
+        <circle cx="16" cy="16" r="10.3" />
       </g>
-      <circle cx="16" cy="16" r="8.4" fill="none" stroke={`url(#${id}-gear)`} strokeWidth="4.6" />
-      <circle cx="16" cy="16" r="5.4" fill="none" stroke="#0b1220" strokeOpacity=".18" strokeWidth=".8" />
+      <circle cx="16" cy="16" r="10.3" fill="none" stroke="#ffffff" strokeOpacity=".35" strokeWidth=".8" />
+      <circle cx="16" cy="16" r="4.7" fill="none" stroke="#0b1220" strokeOpacity=".22" strokeWidth=".9" />
+      <path d="M9.6 10.4a8.4 8.4 0 0 1 7.6-4.7" stroke="#ffffff" strokeOpacity=".55" strokeWidth="1.2" strokeLinecap="round" fill="none" />
     </svg>
   );
 }
